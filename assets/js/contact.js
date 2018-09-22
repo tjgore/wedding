@@ -1,48 +1,59 @@
-$('#rsvp-form-submit').on('click',function(){
-  if($("#rsvpForm").valid())
-  {
-    var name = $("input#guestName").val();
-    var email = $("input#guestEmail").val();
-    var message = $("textarea#guestMessage").val();
-    var firstName = name;
+var $form = $('form#rsvpForm'),
+url = 'https://script.google.com/macros/s/AKfycbyAuT2w7wzxp5lcQFsOYTavN45pvI1PshyEbjXBZbmyIela0r0/exec'
 
-    if (firstName.indexOf(' ') >= 0) {
-        firstName = name.split(' ').slice(0, -1).join(' ');
-    }
-    $.ajax({
-        url: "./mail/contact_me.php",
-        type: "POST",
-        data: {
-            name: name,
-            email: email,
-            message: message
-        },
-        success: function(response){
-            console.log(response);
-          if(response == 'success')
-          {
-            $('#submitMessage').html("<div class='alert alert-success'>");
-            $('#submitMessage > .alert-success').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
-                .append("</button>");
-            $('#submitMessage > .alert-success')
-                .append("<strong>Your message has been sent. </strong>");
-            $('#submitMessage > .alert-success')
-                .append('</div>');
-            $('#submitMessage').delay(3000).fadeOut();
-            //clear all fields
-            $('#rsvpForm').trigger("reset");
-          }
-          else{
-            $('#submitMessage').html("<div class='alert alert-danger'>");
-            $('#submitMessage > .alert-danger').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
-                .append("</button>");
-            $('#submitMessage > .alert-danger').append("<strong>Sorry " + firstName + ", it seems that my mail server is not responding. Please try again later!");
-            $('#submitMessage > .alert-danger').append('</div>');
-            $('#submitMessage').delay(3000).fadeOut();
-            //clear all fields
-            $('#rsvpForm').trigger("reset");
-          }
-        }
-    })
+
+$('#submit-form').on('click', function(e) {
+  e.preventDefault();
+
+  var errors = [];
+$("#msg").html('')
+
+  var name = $('#guestName').val();
+  var email = $('#guestEmail').val();
+  var message = $('#guestMessage').val();
+
+  if(name.trim() == ''){
+    errors.push("Please enter your name")
   }
-});
+  if(name.length > 50){
+    errors.push("Your name must be under 50 characters")
+  }
+  if(email.trim() == ''){
+    errors.push("Please enter your email")
+  }
+  if(email.length > 50){
+    errors.push("Your email is too long")
+  }
+  if(email.indexOf('@') == -1){
+    errors.push("Your email is not valid ")
+  }
+  if(message.length > 150){
+    errors.push("Your message is too long")
+  }
+
+  if(errors.length) {
+    for(var i=0; i<errors.length; i++) {
+      $("#msg").append('<p>' + errors[i] + '</p>')
+    }
+    return;
+  }
+
+  var jqxhr = $.ajax({
+    url: url,
+    method: "GET",
+    dataType: "json",
+    data: $form.serialize()
+  }).done( 
+  function(response) {
+    if(response.result == 'success'){
+      console.log('Success')
+      $('#guestName').val('');
+      $('#guestEmail').val('');
+      $('#guestMessage').val('');
+
+      $("#msg").html('<p> Thank you! Your message was sent!</p>')
+      }
+  }
+  
+  );
+})
