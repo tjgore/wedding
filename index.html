@@ -60,7 +60,7 @@
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <button type="button" id="menu" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -238,10 +238,10 @@
             <h1 class="text-center wow fadeInDown">Dress Code</h1>
             <div class="sub-title text-center wow fadeInDown">Dressy Casual</div>
              <h3 class="text-center wow fadeIn" style="padding: 20px 0 10px 0;">For the Ladies</h3>
-            <p class="text-center wow fadeIn">Try a cocktail dress or a dressy skirt and top. An elegant pantsuit is also appropriate. Floor-length gowns, however, would be inappropriate. Pair with heels, nice wedges or elegant flats. Avoid traditional heels that will likely get stuck in the grass!</p>
+            <p class="text-center wow fadeIn">Try a cocktail dress or a dressy skirt and top. An elegant pantsuit is also appropriate. Floor-length gowns, however, would be inappropriate. Pair with heels, nice wedges or elegant flats. Avoid traditional heels that will likely get stuck in the sand and grass!</p>
 
              <h3 class="text-center wow fadeIn"  style="padding: 20px 0 10px 0;">For the Men</h3>
-            <p class="text-center wow fadeIn">Men should wear a collared button-down or polo and chinos; a jacket isn't required, but it's a nice touch.</p>
+            <p class="text-center wow fadeIn">Men could wear a collared button-down or polo and chinos; a jacket isn't required, but it's a nice touch.</p>
           </div><!-- col-12 -->
           <div class="gift-partner">
 
@@ -339,5 +339,10 @@
   <script src="assets/plugins/sscr.js"></script>
   <script src="assets/js/default.js"></script>
   <script src="assets/js/contact.js"></script>
+  <script type="text/javascript">
+    $(".scrollto").click(function() {
+      $("#bs-example-navbar-collapse-1").toggleClass('in');
+    })
+  </script>
 </body>
 </html>
